@@ -1,0 +1,208 @@
+:root {
+  --bg-deep: #0f0e17;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --accent-purple: #7C4DFF;
+  --accent-pink: #E040FB;
+  --accent-gradient: linear-gradient(135deg, #7C4DFF, #E040FB);
+  --gold: #FFD600;
+  --gold-glow: rgba(255, 214, 0, 0.3);
+  --red-soft: #FF5252;
+  --green-bright: #00E676;
+  --text-primary: #ffffffde;
+  --text-secondary: rgba(255, 255, 255, 0.55);
+}
+
+html {
+  overflow-y: auto !important;
+}
+
+body {
+  background: var(--bg-deep) !important;
+}
+
+/* ─── Glass cards ─── */
+.glass-card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--glass-border) !important;
+  backdrop-filter: blur(12px);
+  border-radius: 16px !important;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.25s ease !important;
+}
+
+.glass-card:hover {
+  background: var(--bg-card-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(124, 77, 255, 0.12) !important;
+}
+
+/* ─── Gradient text ─── */
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Glow button ─── */
+.glow-btn {
+  background: var(--accent-gradient) !important;
+  border: none !important;
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  transition: transform 0.2s ease, box-shadow 0.3s ease !important;
+  box-shadow: 0 4px 20px rgba(124, 77, 255, 0.35) !important;
+}
+
+.glow-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 30px rgba(224, 64, 251, 0.45) !important;
+}
+
+.glow-btn:active {
+  transform: scale(0.97);
+}
+
+/* ─── Animations ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(124, 77, 255, 0.5); }
+  50%      { box-shadow: 0 0 0 14px rgba(124, 77, 255, 0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes confetti-fall {
+  0%   { transform: translateY(-100%) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes coin-bounce {
+  0%   { transform: translateY(0) scale(1); }
+  40%  { transform: translateY(-30px) scale(1.15); }
+  60%  { transform: translateY(-15px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { filter: drop-shadow(0 0 8px var(--gold-glow)); }
+  50%      { filter: drop-shadow(0 0 20px var(--gold-glow)); }
+}
+
+.anim-fade-in-up {
+  animation: fadeInUp 0.5s ease both;
+}
+
+.anim-slide-in {
+  animation: slideInRight 0.4s ease both;
+}
+
+.anim-pulse {
+  animation: pulse 2s infinite;
+}
+
+.anim-shake {
+  animation: shake 0.5s ease;
+}
+
+/* ─── Vue transitions ─── */
+.page-enter-active {
+  animation: fadeInUp 0.4s ease;
+}
+.page-leave-active {
+  animation: fadeIn 0.2s ease reverse;
+}
+
+.list-enter-active {
+  animation: slideInRight 0.35s ease;
+}
+.list-leave-active {
+  animation: fadeIn 0.2s ease reverse;
+}
+
+/* ─── Stat card ─── */
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ─── Custom scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 77, 255, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 77, 255, 0.5);
+}
+
+/* ─── Confetti pieces ─── */
+.confetti-container {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: confetti-fall 3s linear forwards;
+}
+
+/* ─── Progress bar guarantee ─── */
+.guarantee-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  position: relative;
+}
+
+.guarantee-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--accent-gradient);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.guarantee-bar-fill.danger {
+  background: linear-gradient(135deg, #FF5252, #FFD600);
+}

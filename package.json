@@ -1,0 +1,35 @@
+{
+  "name": "wishwish-dapp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "core-js": "^3.37.0",
+    "ethers": "^5.7.2",
+    "vue": "^2.7.16",
+    "vue-router": "^3.6.5",
+    "vuetify": "^2.7.2",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.28.6",
+    "@vue/cli-plugin-babel": "~5.0.8",
+    "@vue/cli-plugin-eslint": "~5.0.8",
+    "@vue/cli-service": "~5.0.8",
+    "eslint-plugin-vue": "^9.33.0",
+    "sass": "~1.32.13",
+    "sass-loader": "^13.3.3",
+    "vue-cli-plugin-vuetify": "~2.5.8",
+    "vue-template-compiler": "^2.7.16",
+    "vuetify-loader": "^1.9.2"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

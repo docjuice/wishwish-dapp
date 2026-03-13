@@ -51,23 +51,24 @@
             class="mb-3"
           />
 
-          <v-text-field
-            v-if="proposalAction === 'setLotteryPrice'"
+            <v-text-field
+            v-if="proposalAction === 'setBetAmount'"
             v-model="actionValue"
-            label="Новая цена (ETH)"
-            dense outlined dark hide-details type="number" step="0.0001" class="mb-3"
+            label="Новая ставка (ETH)"
+            dense outlined dark hide-details type="number" step="0.001" class="mb-3"
           />
           <v-text-field
-            v-if="proposalAction === 'setPrizeAmountInWei'"
+            v-if="proposalAction === 'setProtocolFeePercent'"
             v-model="actionValue"
-            label="Новый приз (ETH)"
-            dense outlined dark hide-details type="number" step="0.0001" class="mb-3"
+            label="Protocol Fee (из 10000, напр. 500 = 5%)"
+            dense outlined dark hide-details type="number" class="mb-3"
           />
-          <v-text-field
-            v-if="proposalAction === 'setWinChance'"
+          <v-select
+            v-if="proposalAction === 'setPaused'"
             v-model="actionValue"
-            label="Шанс выигрыша (0-100)"
-            dense outlined dark hide-details type="number" min="0" max="100" class="mb-3"
+            :items="[{text:'Пауза',value:'true'},{text:'Возобновить',value:'false'}]"
+            label="Состояние"
+            dense outlined dark hide-details class="mb-3"
           />
           <v-text-field
             v-if="proposalAction === 'setCallbackGasLimit'"
@@ -258,9 +259,9 @@ export default {
       snackbarColor: "success",
       stateSteps: ["Pending", "Active", "Succeeded", "Queued", "Executed"],
       actionOptions: [
-        { text: "Изменить цену билета", value: "setLotteryPrice" },
-        { text: "Изменить приз", value: "setPrizeAmountInWei" },
-        { text: "Изменить шанс выигрыша", value: "setWinChance" },
+        { text: "Изменить ставку", value: "setBetAmount" },
+        { text: "Изменить protocol fee %", value: "setProtocolFeePercent" },
+        { text: "Пауза/Возобновить", value: "setPaused" },
         { text: "Изменить Gas Limit VRF", value: "setCallbackGasLimit" },
         { text: "Вывести средства", value: "withdraw" },
       ],
@@ -326,10 +327,10 @@ export default {
     buildCalldata() {
       const lottery = getLotteryContract(this.provider);
       const a = this.proposalAction;
-      if (a === "setLotteryPrice") return lottery.interface.encodeFunctionData("setLotteryPrice", [ethers.utils.parseEther(this.actionValue || "0")]);
-      if (a === "setPrizeAmountInWei") return lottery.interface.encodeFunctionData("setPrizeAmountInWei", [ethers.utils.parseEther(this.actionValue || "0")]);
-      if (a === "setWinChance") return lottery.interface.encodeFunctionData("setWinChance", [parseInt(this.actionValue) || 0]);
-      if (a === "setCallbackGasLimit") return lottery.interface.encodeFunctionData("setCallbackGasLimit", [parseInt(this.actionValue) || 200000]);
+      if (a === "setBetAmount") return lottery.interface.encodeFunctionData("setBetAmount", [ethers.utils.parseEther(this.actionValue || "0")]);
+      if (a === "setProtocolFeePercent") return lottery.interface.encodeFunctionData("setProtocolFeePercent", [parseInt(this.actionValue) || 500]);
+      if (a === "setPaused") return lottery.interface.encodeFunctionData("setPaused", [this.actionValue === "true"]);
+      if (a === "setCallbackGasLimit") return lottery.interface.encodeFunctionData("setCallbackGasLimit", [parseInt(this.actionValue) || 300000]);
       if (a === "withdraw") return lottery.interface.encodeFunctionData("withdraw", [this.withdrawAddress || this.address, ethers.utils.parseEther(this.actionValue || "0")]);
       return null;
     },

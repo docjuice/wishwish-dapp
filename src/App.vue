@@ -17,6 +17,15 @@
       </v-btn>
       <v-btn
         text
+        :to="{ name: 'Staking' }"
+        class="nav-btn mr-1"
+        active-class="nav-btn-active"
+      >
+        <v-icon left small>mdi-diamond-stone</v-icon>
+        Стейкинг
+      </v-btn>
+      <v-btn
+        text
         :to="{ name: 'Governance' }"
         class="nav-btn mr-4"
         active-class="nav-btn-active"
